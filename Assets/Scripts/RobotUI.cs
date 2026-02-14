@@ -6,16 +6,17 @@ using System.Collections.Generic;
 [RequireComponent(typeof(UIDocument))]
 public class RobotUI : MonoBehaviour
 {
-    public Robot       robot;
+    public Robot robot;
     public GameManager gameManager;
-    public int         maxCommands  = 30;
-    public int         maxIterations = 200;
+    public int maxCommands  = 30;
+    public int maxIterations = 200;
+    public bool debugMode = true;
 
     private VisualElement root;
     private VisualElement programList; 
-    private Label         statusLbl;
-    private Button        runBtn;
-    private Button        stopBtn;
+    private Label statusLbl;
+    private Button runBtn;
+    private Button stopBtn;
 
     private List<Block> blocks    = new List<Block>();
     private bool        running   = false;
@@ -51,6 +52,8 @@ public class RobotUI : MonoBehaviour
 
     void Start()
     {
+        if (debugMode) Debug.Log("[RobotUI] === START ===");
+        
         FindDeps();
         var doc = GetComponent<UIDocument>();
         doc.panelSettings.scaleMode = PanelScaleMode.ConstantPixelSize;
@@ -58,6 +61,8 @@ public class RobotUI : MonoBehaviour
 
         Screen.orientation = ScreenOrientation.Portrait;
         BuildUI();
+        
+        if (debugMode) Debug.Log("[RobotUI] UI Built successfully");
     }
 
     void Update()
@@ -67,12 +72,16 @@ public class RobotUI : MonoBehaviour
 
     void FindDeps()
     {
+        if (debugMode) Debug.Log("[RobotUI] FindDeps called");
+        
         if (robot == null || !robot.gameObject.activeInHierarchy)
         {
             var all = FindObjectsOfType<Robot>(true);
             foreach (var r in all) { robot = r; break; }
+            if (debugMode && robot != null) Debug.Log($"[RobotUI] Robot found: {robot.name}");
         }
         if (gameManager == null) gameManager = FindObjectOfType<GameManager>();
+        if (debugMode && gameManager != null) Debug.Log($"[RobotUI] GameManager found: {gameManager.name}");
     }
 
     bool RobotReady() => robot != null && robot.gameObject.activeInHierarchy;
@@ -80,13 +89,13 @@ public class RobotUI : MonoBehaviour
     void BuildUI()
     {
         var shell = El();
-        shell.style.position        = Position.Absolute;
-        shell.style.bottom          = 0; shell.style.left = 0; shell.style.right = 0;
-        shell.style.height          = new Length(60, LengthUnit.Percent);
+        shell.style.position = Position.Absolute;
+        shell.style.bottom = 0; shell.style.left = 0; shell.style.right = 0;
+        shell.style.height = new Length(60, LengthUnit.Percent);
         shell.style.backgroundColor = BG0;
-        shell.style.borderTopWidth  = 1;
-        shell.style.borderTopColor  = BORDER;
-        shell.style.flexDirection   = FlexDirection.Column;
+        shell.style.borderTopWidth = 1;
+        shell.style.borderTopColor = BORDER;
+        shell.style.flexDirection = FlexDirection.Column;
 
         float safeB = Screen.height - Screen.safeArea.yMax;
         shell.style.paddingBottom = Mathf.Max(0, safeB);
@@ -156,11 +165,11 @@ public class RobotUI : MonoBehaviour
         c.Add(PBtn("►  НАПРАВО",   BLUE,   BLUE2,   () => Add(BlockType.RotateRight)));
 
         c.Add(Gap(8)); c.Add(SectionHdr("ПОВТОРИТЬ"));
-        c.Add(PBtn("↺  2 РАЗА",   ORANGE, ORANGE2, () => AddLoop(2)));
         c.Add(PBtn("↺  3 РАЗА",   ORANGE, ORANGE2, () => AddLoop(3)));
-        c.Add(PBtn("↺  5 РАЗ",    ORANGE, ORANGE2, () => AddLoop(5)));
+        c.Add(PBtn("↺  5 РАЗА",   ORANGE, ORANGE2, () => AddLoop(5)));
+        c.Add(PBtn("↺  7 РАЗ",    ORANGE, ORANGE2, () => AddLoop(7)));
 
-        c.Add(Gap(8)); c.Add(SectionHdr("БЕСКОНЕЧНО"));
+        // c.Add(Gap(8)); c.Add(SectionHdr("БЕСКОНЕЧНО"));
         c.Add(PBtn("∞  ВСЕГДА",   PURPLE, PURPLE2, AddInfinite));
         c.Add(PBtn("└  КОНЕЦ",    GREY,   GREY2,   AddEnd));
 
@@ -184,25 +193,41 @@ public class RobotUI : MonoBehaviour
         var hdr = El(FlexDirection.Row);
         hdr.style.alignItems    = Align.Center;
         hdr.style.marginBottom  = 8;
-        var title = L("ПРОГРАММА", 13, TXT2, FontStyle.Bold);
+        var title = L("ПРОГРАММА   ", 13, TXT2, FontStyle.Bold);
         title.style.letterSpacing = 2;
-        title.style.flexGrow = 1;
         hdr.Add(title);
+
+        var iconBtns = El(FlexDirection.Row);
+        
+        runBtn = IconBtn("▶", GREEN, GREEN2, OnRunClick);
+        runBtn.style.marginRight = 8;
+        stopBtn = IconBtn("■", RED, RED2, OnStopClick);
+        stopBtn.style.marginRight = 8;
+        var resetIcon = IconBtn("↺", GREY, GREY2, OnResetClick);
+        
+        stopBtn.SetEnabled(false);
+        stopBtn.style.opacity = 0.4f;
+        
+        iconBtns.Add(runBtn);
+        iconBtns.Add(stopBtn);
+        iconBtns.Add(resetIcon);
+        hdr.Add(iconBtns);
+        
         panel.Add(hdr);
 
         var scroll = new ScrollView(ScrollViewMode.Vertical);
-        scroll.style.flexGrow        = 1;
+        scroll.style.flexGrow = 1;
         scroll.style.backgroundColor = BG2;
-        scroll.style.borderTopLeftRadius     = 8;
-        scroll.style.borderTopRightRadius    = 8;
-        scroll.style.borderBottomLeftRadius  = 8;
-        scroll.style.borderBottomRightRadius = 8;
-        scroll.style.borderLeftWidth   = 1; scroll.style.borderLeftColor   = BORDER;
-        scroll.style.borderRightWidth  = 1; scroll.style.borderRightColor  = BORDER;
-        scroll.style.borderTopWidth    = 1; scroll.style.borderTopColor    = BORDER;
+        scroll.style.borderTopLeftRadius = 20;
+        scroll.style.borderTopRightRadius = 20;
+        scroll.style.borderBottomLeftRadius = 20;
+        scroll.style.borderBottomRightRadius = 20;
+        scroll.style.borderLeftWidth = 1; scroll.style.borderLeftColor   = BORDER;
+        scroll.style.borderRightWidth = 1; scroll.style.borderRightColor  = BORDER;
+        scroll.style.borderTopWidth = 1; scroll.style.borderTopColor    = BORDER;
         scroll.style.borderBottomWidth = 1; scroll.style.borderBottomColor = BORDER;
-        scroll.style.paddingTop    = 4;
-        scroll.style.paddingBottom = 4;
+        scroll.style.paddingTop = 8;
+        scroll.style.paddingBottom = 8;
         panel.Add(scroll);
 
         programList = scroll.contentContainer;
@@ -218,30 +243,64 @@ public class RobotUI : MonoBehaviour
         bar.style.borderTopColor  = BORDER;
         bar.style.paddingLeft     = 10;
         bar.style.paddingRight    = 10;
-        bar.style.paddingTop      = 10;
-        bar.style.paddingBottom   = 10;
-
-        runBtn  = CBtn("▶  СТАРТ",    GREEN,  GREEN2,  OnRunClick);
-        stopBtn = CBtn("■  СТОП",     RED,    RED2,    OnStopClick);
-        var clr = CBtn("✕  ОЧИСТИТЬ", AMBER,  AMBER2,  OnClearClick);
-        var rst = CBtn("↺  СБРОС",    GREY,   GREY2,   OnResetClick);
-
-        stopBtn.SetEnabled(false);
-        stopBtn.style.opacity = 0.4f;
-
-        bar.Add(runBtn); bar.Add(stopBtn); bar.Add(clr); bar.Add(rst);
+        bar.style.paddingTop      = 6;
+        bar.style.paddingBottom   = 6;
+        
+        var hint = L("← добавь блоки", 11, TXT2);
+        bar.Add(hint);
+        
         return bar;
+    }
+
+    Button IconBtn(string icon, Color bg, Color bgHov, System.Action action)
+    {
+        var btn = new Button(action);
+        btn.text = icon;
+        btn.style.width = 80;
+        btn.style.height = 80;
+        btn.style.fontSize = 42;
+        btn.style.unityFontStyleAndWeight = FontStyle.Bold;
+        btn.style.color = TXT;
+        btn.style.backgroundColor = bg;
+        btn.style.borderTopLeftRadius = 12;
+        btn.style.borderTopRightRadius = 12;
+        btn.style.borderBottomLeftRadius = 12;
+        btn.style.borderBottomRightRadius = 12;
+        btn.style.borderBottomWidth = 3;
+        btn.style.borderBottomColor = MulColor(bg, 0.6f);
+
+        btn.RegisterCallback<PointerDownEvent>(_ =>
+        {
+            btn.style.backgroundColor = bgHov;
+            btn.style.opacity = 0.8f;
+        });
+        btn.RegisterCallback<PointerUpEvent>(_ =>
+        {
+            btn.style.backgroundColor = bg;
+            btn.style.opacity = 1f;
+        });
+        btn.RegisterCallback<PointerLeaveEvent>(_ =>
+        {
+            btn.style.backgroundColor = bg;
+            btn.style.opacity = 1f;
+        });
+        return btn;
     }
 
     void Add(BlockType t)
     {
+        if (debugMode) Debug.Log($"[RobotUI] Add block: {t}, running: {running}, count: {blocks.Count}");
+        
         if (running || blocks.Count >= maxCommands) return;
         blocks.Add(new Block { type = t });
         RefreshProgram();
+        if (debugMode) Debug.Log($"[RobotUI] Block added, total: {blocks.Count}");
     }
 
     void AddLoop(int n)
     {
+        if (debugMode) Debug.Log($"[RobotUI] AddLoop: {n}");
+        
         if (running || blocks.Count >= maxCommands) return;
         blocks.Add(new Block { type = BlockType.LoopStart, loopCount = n });
         RefreshProgram();
@@ -249,6 +308,8 @@ public class RobotUI : MonoBehaviour
 
     void AddInfinite()
     {
+        if (debugMode) Debug.Log("[RobotUI] AddInfinite");
+        
         if (running || blocks.Count >= maxCommands) return;
         blocks.Add(new Block { type = BlockType.InfiniteLoopStart });
         RefreshProgram();
@@ -256,6 +317,8 @@ public class RobotUI : MonoBehaviour
 
     void AddWhile(WhileCondition cond)
     {
+        if (debugMode) Debug.Log($"[RobotUI] AddWhile: {cond}");
+        
         if (running || blocks.Count >= maxCommands) return;
         blocks.Add(new Block { type = BlockType.WhileStart, whileCond = cond });
         RefreshProgram();
@@ -263,6 +326,8 @@ public class RobotUI : MonoBehaviour
 
     void AddEnd()
     {
+        if (debugMode) Debug.Log("[RobotUI] AddEnd");
+        
         if (running) return;
         int open = 0;
         foreach (var b in blocks)
@@ -277,6 +342,8 @@ public class RobotUI : MonoBehaviour
 
     void DeleteBlock(int idx)
     {
+        if (debugMode) Debug.Log($"[RobotUI] DeleteBlock: {idx}");
+        
         if (running || idx < 0 || idx >= blocks.Count) return;
         var b = blocks[idx];
 
@@ -336,14 +403,18 @@ public class RobotUI : MonoBehaviour
 
         var row = El(FlexDirection.Row);
         row.style.alignItems       = Align.Center;
-        row.style.paddingTop       = 8;
-        row.style.paddingBottom    = 8;
-        row.style.paddingLeft      = 8 + nest * 14;
-        row.style.paddingRight     = 4;
-        row.style.marginBottom     = 2;
-        row.style.borderLeftWidth  = 3;
+        row.style.paddingTop       = 10;
+        row.style.paddingBottom    = 10;
+        row.style.paddingLeft      = 10 + nest * 14;
+        row.style.paddingRight     = 6;
+        row.style.marginBottom     = 4;
+        row.style.borderLeftWidth  = 4;
         row.style.borderLeftColor  = accent;
         row.style.backgroundColor  = idx % 2 == 0 ? BG2 : BG1;
+        row.style.borderTopLeftRadius     = 14;
+        row.style.borderTopRightRadius    = 14;
+        row.style.borderBottomLeftRadius  = 14;
+        row.style.borderBottomRightRadius = 14;
         row.name = $"row_{idx}";
 
         var ic = L(icon, 15, accent);
@@ -359,15 +430,15 @@ public class RobotUI : MonoBehaviour
 
         var del = new Button(() => DeleteBlock(idx));
         del.text = "×";
-        del.style.width  = 28; del.style.height = 28;
-        del.style.fontSize = 28; del.style.color = TXT2;
+        del.style.width  = 32; del.style.height = 32;
+        del.style.fontSize = 32; del.style.color = TXT2;
         del.style.backgroundColor  = BG0;
         del.style.borderLeftWidth  = 0; del.style.borderRightWidth  = 0;
         del.style.borderTopWidth   = 0; del.style.borderBottomWidth = 0;
-        del.style.borderTopLeftRadius     = 6;
-        del.style.borderTopRightRadius    = 6;
-        del.style.borderBottomLeftRadius  = 6;
-        del.style.borderBottomRightRadius = 6;
+        del.style.borderTopLeftRadius     = 12;
+        del.style.borderTopRightRadius    = 12;
+        del.style.borderBottomLeftRadius  = 12;
+        del.style.borderBottomRightRadius = 12;
         del.RegisterCallback<PointerEnterEvent>(_ => { del.style.color = RED2; del.style.backgroundColor = Hex("#21262D"); });
         del.RegisterCallback<PointerLeaveEvent>(_ => { del.style.color = TXT2;  del.style.backgroundColor = BG0; });
         row.Add(del);
@@ -407,13 +478,15 @@ public class RobotUI : MonoBehaviour
 
     void OnRunClick()
     {
+        if (debugMode) Debug.Log($"[RobotUI] OnRunClick - running: {running}, blocks: {blocks.Count}");
+        
         FindDeps();
         if (!RobotReady())
         {
             if (robot != null) robot.gameObject.SetActive(true);
-            if (!RobotReady()) { Status("Робот не найден!", RED2); return; }
+            if (!RobotReady()) { Status("Робот не найден!", RED2); Debug.LogError("[RobotUI] Robot not found!"); return; }
         }
-        if (running || blocks.Count == 0) return;
+        if (running || blocks.Count == 0) { if (debugMode) Debug.LogWarning("[RobotUI] Cannot run - already running or empty"); return; }
 
         int open = 0;
         foreach (var b in blocks)
@@ -421,7 +494,7 @@ public class RobotUI : MonoBehaviour
             if (b.IsLoopOpen()) open++;
             else if (b.type == BlockType.LoopEnd) open--;
         }
-        if (open != 0) { Status("Незакрытый цикл!", RED2); return; }
+        if (open != 0) { Status("Незакрытый цикл!", RED2); Debug.LogError("[RobotUI] Unclosed loop!"); return; }
 
         running   = true;
         cancelled = false;
@@ -429,18 +502,24 @@ public class RobotUI : MonoBehaviour
         runBtn.SetEnabled(false);  runBtn.style.opacity  = 0.4f;
         stopBtn.SetEnabled(true); stopBtn.style.opacity = 1.0f;
         Status("Выполняется…", GREEN2);
+        
+        if (debugMode) Debug.Log("[RobotUI] Starting program execution");
 
         StartCoroutine(RunAll());
     }
 
     void OnStopClick()
     {
+        if (debugMode) Debug.Log("[RobotUI] OnStopClick");
+        
         if (!running) return;
         cancelled = true;
     }
 
     void OnClearClick()
     {
+        if (debugMode) Debug.Log("[RobotUI] OnClearClick");
+        
         if (running) return;
         blocks.Clear();
         RefreshProgram();
@@ -449,6 +528,8 @@ public class RobotUI : MonoBehaviour
 
     void OnResetClick()
     {
+        if (debugMode) Debug.Log("[RobotUI] OnResetClick");
+        
         if (running) return;
         blocks.Clear();
         RefreshProgram();
@@ -541,6 +622,8 @@ public class RobotUI : MonoBehaviour
 
     IEnumerator ExecOne(Block b)
     {
+        if (debugMode) Debug.Log($"[RobotUI] ExecOne: {b.type}");
+        
         if (!RobotReady())
         {
             FindDeps();
@@ -560,9 +643,15 @@ public class RobotUI : MonoBehaviour
 
         switch (b.type)
         {
-            case BlockType.MoveForward:  robot.TryMoveForward(); break;
-            case BlockType.RotateLeft:   robot.RotateLeft();     break;
-            case BlockType.RotateRight:  robot.RotateRight();    break;
+            case BlockType.MoveForward:  
+                if (debugMode) Debug.Log("[RobotUI] Executing: MoveForward");
+                robot.TryMoveForward(); break;
+            case BlockType.RotateLeft:   
+                if (debugMode) Debug.Log("[RobotUI] Executing: RotateLeft");
+                robot.RotateLeft();     break;
+            case BlockType.RotateRight:  
+                if (debugMode) Debug.Log("[RobotUI] Executing: RotateRight");
+                robot.RotateRight();    break;
         }
 
         yield return null;
@@ -623,9 +712,9 @@ public class RobotUI : MonoBehaviour
     {
         var btn = new Button(action);
         btn.text = label;   
-        btn.style.height     = 78;
+        btn.style.height     = 86;
         btn.style.marginBottom = 6;
-        btn.style.fontSize   = 38;
+        btn.style.fontSize   =42;
         btn.style.unityFontStyleAndWeight = FontStyle.Bold;
         btn.style.color                   = TXT;
         btn.style.backgroundColor         = bg;
@@ -633,12 +722,12 @@ public class RobotUI : MonoBehaviour
         btn.style.paddingLeft             = 12;
         btn.style.borderLeftWidth  = 0; btn.style.borderRightWidth  = 0;
         btn.style.borderTopWidth   = 0;
-        btn.style.borderBottomWidth = 3;
+        btn.style.borderBottomWidth = 4;
         btn.style.borderBottomColor = MulColor(bg, 0.55f);
-        btn.style.borderTopLeftRadius     = 8;
-        btn.style.borderTopRightRadius    = 8;
-        btn.style.borderBottomLeftRadius  = 8;
-        btn.style.borderBottomRightRadius = 8;
+        btn.style.borderTopLeftRadius     = 20;
+        btn.style.borderTopRightRadius    = 20;
+        btn.style.borderBottomLeftRadius  = 20;
+        btn.style.borderBottomRightRadius = 20;
 
         btn.RegisterCallback<PointerDownEvent>(_ =>
         {
@@ -650,13 +739,13 @@ public class RobotUI : MonoBehaviour
         {
             btn.style.backgroundColor   = bg;
             btn.style.translate         = new Translate(0, 0);
-            btn.style.borderBottomWidth = 3;
+            btn.style.borderBottomWidth = 4;
         });
         btn.RegisterCallback<PointerLeaveEvent>(_ =>
         {
             btn.style.backgroundColor   = bg;
             btn.style.translate         = new Translate(0, 0);
-            btn.style.borderBottomWidth = 3;
+            btn.style.borderBottomWidth = 4;
         });
         return btn;
     }

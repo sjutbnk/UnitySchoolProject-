@@ -12,9 +12,9 @@ public class Robot : MonoBehaviour
     public bool isMoving   = false;
     public bool isRotating = false;
 
-    private Renderer   robotRenderer;
-    private bool       hasColorProp  = false;
-    private Color      originalColor = Color.white;
+    private Renderer robotRenderer;
+    private bool hasColorProp  = false;
+    private Color originalColor = Color.white;
 
     private readonly Vector3[] directions = { Vector3.forward, Vector3.right, Vector3.back, Vector3.left };
     private int currentDirIndex = 0;
