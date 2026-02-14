@@ -673,6 +673,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1795092298493969098, guid: 1a9663d470a461842bd6163a5004e5b3, type: 3}
+      propertyPath: isMoving
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795092298493969098, guid: 1a9663d470a461842bd6163a5004e5b3, type: 3}
+      propertyPath: isRotating
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5650932962950564481, guid: 1a9663d470a461842bd6163a5004e5b3, type: 3}
       propertyPath: m_Name
       value: Capsule
