@@ -27,18 +27,27 @@ public class RobotUI : MonoBehaviour
         ColorUtility.TryParseHtmlString(h, out Color c);
         return c;
     }
-    static readonly Color BG0    = Hex("#0D1117");
-    static readonly Color BG1    = Hex("#161B22");
-    static readonly Color BG2    = Hex("#1C2128");
+    // static readonly Color BG0    = Hex("#0D1117");
+    static readonly Color BG0    = Hex("#06141B");
+    // static readonly Color BG0    = Hex("#101010");
+    static readonly Color BG2    = Hex("#11212D");
     static readonly Color BORDER = Hex("#30363D");
-    static readonly Color TXT    = Hex("#E6EDF3");
-    static readonly Color TXT2   = Hex("#7D8590");
-    static readonly Color BLUE   = Hex("#1F6FEB");
-    static readonly Color BLUE2  = Hex("#388BFD");
-    static readonly Color ORANGE = Hex("#D4671A");
-    static readonly Color ORANGE2= Hex("#F09A4B");
-    static readonly Color GREEN  = Hex("#1A7F37");
-    static readonly Color GREEN2 = Hex("#3FB950");
+    // static readonly Color TXT    = Hex("#E6EDF3");
+    static readonly Color TXT    = Hex("#CCD0CF");
+    // static readonly Color TXT2   = Hex("#7D8590");
+    static readonly Color TXT2   = Hex("#9BA8AB");
+    // static readonly Color BLUE   = Hex("#1F6FEB");
+    static readonly Color BLUE   = Hex("#253745");
+    // static readonly Color BLUE2  = Hex("#388BFD");
+    static readonly Color BLUE2   = Hex("#253745");
+    // static readonly Color ORANGE = Hex("#D4671A");
+    static readonly Color ORANGE = Hex("#253745");
+    //static readonly Color ORANGE2= Hex("#F09A4B");
+    static readonly Color ORANGE2 = Hex("#253745");
+    // static readonly Color GREEN  = Hex("#1A7F37");
+    static readonly Color GREEN = Hex("#253745");
+    // static readonly Color GREEN2 = Hex("#3FB950");
+    static readonly Color GREEN2 = Hex("#253745");
     static readonly Color PURPLE = Hex("#6E40C9");
     static readonly Color PURPLE2= Hex("#A371F7");
     static readonly Color TEAL   = Hex("#1B7C83");
@@ -117,7 +126,7 @@ public class RobotUI : MonoBehaviour
     VisualElement BuildStatusBar()
     {
         var bar = El(FlexDirection.Row);
-        bar.style.backgroundColor = BG1;
+        bar.style.backgroundColor = BG0;
         bar.style.paddingLeft     = 16;
         bar.style.paddingRight    = 16;
         bar.style.paddingTop      = 10;
@@ -144,7 +153,7 @@ public class RobotUI : MonoBehaviour
     {
         var panel = El();
         panel.style.width           = new Length(40, LengthUnit.Percent);
-        panel.style.backgroundColor = BG1;
+        panel.style.backgroundColor = BG0;
         panel.style.borderRightWidth = 1;
         panel.style.borderRightColor = BORDER;
         panel.style.flexDirection   = FlexDirection.Column;
@@ -193,13 +202,13 @@ public class RobotUI : MonoBehaviour
         var hdr = El(FlexDirection.Row);
         hdr.style.alignItems    = Align.Center;
         hdr.style.marginBottom  = 8;
-        var title = L("ПРОГРАММА   ", 13, TXT2, FontStyle.Bold);
+        var title = L("ПРОГРАММА   ", 8, TXT2, FontStyle.Bold);
         title.style.letterSpacing = 2;
         hdr.Add(title);
 
         var iconBtns = El(FlexDirection.Row);
         
-        runBtn = IconBtn("▶", GREEN, GREEN2, OnRunClick);
+        runBtn = IconBtn("▶", GREY, GREY2, OnRunClick);
         runBtn.style.marginRight = 8;
         stopBtn = IconBtn("■", RED, RED2, OnStopClick);
         stopBtn.style.marginRight = 8;
@@ -238,7 +247,7 @@ public class RobotUI : MonoBehaviour
     VisualElement BuildControlBar()
     {
         var bar = El(FlexDirection.Row);
-        bar.style.backgroundColor = BG1;
+        bar.style.backgroundColor = BG0;
         bar.style.borderTopWidth  = 1;
         bar.style.borderTopColor  = BORDER;
         bar.style.paddingLeft     = 10;
@@ -410,7 +419,7 @@ public class RobotUI : MonoBehaviour
         row.style.marginBottom     = 4;
         row.style.borderLeftWidth  = 4;
         row.style.borderLeftColor  = accent;
-        row.style.backgroundColor  = idx % 2 == 0 ? BG2 : BG1;
+        row.style.backgroundColor  = idx % 2 == 0 ? BG2 : BG0;
         row.style.borderTopLeftRadius     = 14;
         row.style.borderTopRightRadius    = 14;
         row.style.borderBottomLeftRadius  = 14;
@@ -469,7 +478,7 @@ public class RobotUI : MonoBehaviour
             if (i >= blocks.Count) break;
             row.style.backgroundColor = i == idx
                 ? Hex("#0F2D20")
-                : (i % 2 == 0 ? BG2 : BG1);
+                : (i % 2 == 0 ? BG2 : BG0);
             row.style.borderLeftColor = i == idx
                 ? GREEN2
                 : Meta(blocks[i]).Item3;
