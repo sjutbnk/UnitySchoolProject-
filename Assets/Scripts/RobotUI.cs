@@ -117,7 +117,7 @@ public class RobotUI : MonoBehaviour
         bar.style.borderBottomWidth = 1;
         bar.style.borderBottomColor = BORDER;
 
-        var lvl = L("● УР.1", 12, TXT2, FontStyle.Bold);
+        var lvl = L("● 1.", 12, TXT2, FontStyle.Bold);
         lvl.style.letterSpacing = 1;
 
         statusLbl = L("Добавь команды и нажми СТАРТ", 12, TXT2);
@@ -360,7 +360,7 @@ public class RobotUI : MonoBehaviour
         var del = new Button(() => DeleteBlock(idx));
         del.text = "×";
         del.style.width  = 28; del.style.height = 28;
-        del.style.fontSize = 16; del.style.color = TXT2;
+        del.style.fontSize = 28; del.style.color = TXT2;
         del.style.backgroundColor  = BG0;
         del.style.borderLeftWidth  = 0; del.style.borderRightWidth  = 0;
         del.style.borderTopWidth   = 0; del.style.borderBottomWidth = 0;
@@ -598,7 +598,7 @@ public class RobotUI : MonoBehaviour
     static Label L(string text, int size, Color col, FontStyle fs = FontStyle.Normal)
     {
         var l = new Label(text);
-        l.style.fontSize = size;
+        l.style.fontSize = size * 3.6f; 
         l.style.color    = col;
         l.style.unityFontStyleAndWeight = fs;
         return l;
@@ -623,9 +623,9 @@ public class RobotUI : MonoBehaviour
     {
         var btn = new Button(action);
         btn.text = label;   
-        btn.style.height     = 48;
+        btn.style.height     = 78;
         btn.style.marginBottom = 6;
-        btn.style.fontSize   = 13;
+        btn.style.fontSize   = 38;
         btn.style.unityFontStyleAndWeight = FontStyle.Bold;
         btn.style.color                   = TXT;
         btn.style.backgroundColor         = bg;
@@ -661,15 +661,14 @@ public class RobotUI : MonoBehaviour
         return btn;
     }
 
-    // Control bar button — горизонтальные, растягиваются
     Button CBtn(string label, Color bg, Color bgHov, System.Action action)
     {
         var btn = new Button(action);
         btn.text = label;
         btn.style.flexGrow   = 1;
-        btn.style.height     = 50;
+        btn.style.height     = 64;
         btn.style.marginLeft = 4; btn.style.marginRight = 4;
-        btn.style.fontSize   = 12;
+        btn.style.fontSize   = 28;
         btn.style.unityFontStyleAndWeight = FontStyle.Bold;
         btn.style.color           = TXT;
         btn.style.backgroundColor = bg;
@@ -725,3 +724,4 @@ public enum BlockType
 }
 
 public enum WhileCondition { None, WallAhead, NoWallAhead }
+
