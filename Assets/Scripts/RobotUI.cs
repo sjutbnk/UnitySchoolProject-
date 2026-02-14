@@ -265,16 +265,16 @@ public class RobotUI : MonoBehaviour
     {
         var btn = new Button(action);
         btn.text = icon;
-        btn.style.width = 80;
-        btn.style.height = 80;
-        btn.style.fontSize = 42;
+        btn.style.width = 120;
+        btn.style.height = 90;
+        btn.style.fontSize = 52;
         btn.style.unityFontStyleAndWeight = FontStyle.Bold;
         btn.style.color = TXT;
         btn.style.backgroundColor = bg;
-        btn.style.borderTopLeftRadius = 12;
-        btn.style.borderTopRightRadius = 12;
-        btn.style.borderBottomLeftRadius = 12;
-        btn.style.borderBottomRightRadius = 12;
+        btn.style.borderTopLeftRadius = 16;
+        btn.style.borderTopRightRadius = 16;
+        btn.style.borderBottomLeftRadius = 16;
+        btn.style.borderBottomRightRadius = 16;
         btn.style.borderBottomWidth = 3;
         btn.style.borderBottomColor = MulColor(bg, 0.6f);
 
