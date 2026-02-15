@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public float cellSize = 1f;
     public int gridSize = 9;
 
+    public int LevelNumber => currentLevel;
+
     private List<GameObject> levelObjects = new List<GameObject>();
     private GameObject goalObject;
     private Keyboard keyboard;
@@ -64,9 +66,13 @@ public class GameManager : MonoBehaviour
 
         switch (level)
         {
-            case 1:  CreateLevel1();      break;
-            case 2:  CreateLevel2();      break;
-            default: CreateRandomLevel(); break;
+            case 1: CreateLevel1(); break;
+            case 2: CreateLevel2(); break;
+            case 3: CreateLevel3(); break;
+            case 4: CreateLevel4(); break;
+            case 5: CreateLevel5(); break;
+            case 6: CreateLevel6(); break;
+            default: CreateLevel1(); break;
         }
 
         PlaceRobot();
@@ -84,30 +90,49 @@ public class GameManager : MonoBehaviour
         CreateGoal(new Vector3(4, 0.1f, 0));
     }
 
-    void CreateRandomLevel()
+    void CreateLevel3()
     {
-        Vector3 goalPos    = new Vector3(4, 0.1f, Random.Range(-2, 3));
-        Vector3 robotStart = new Vector3(-3, 0.5f, 0);
-        int wallCount      = Mathf.Min(3 + currentLevel, 8);
-        int created = 0, tries = 0;
+        CreateWall(new Vector3(1, 0.5f, 0));
+        CreateWall(new Vector3(1, 0.5f, 1));
+        CreateWall(new Vector3(-1, 0.5f, -1));
+        CreateGoal(new Vector3(3, 0.1f, 0));
+    }
 
-        while (created < wallCount && tries < 100)
-        {
-            tries++;
-            Vector3 pos = new Vector3(Random.Range(-3, 4), 0.5f, Random.Range(-3, 4));
-            if (Vector3.Distance(pos, robotStart) < 1.5f) continue;
-            if (Vector3.Distance(new Vector3(pos.x, 0.1f, pos.z), goalPos) < 1f) continue;
+    void CreateLevel4()
+    {
+        CreateWall(new Vector3(0, 0.5f, 0));
+        CreateWall(new Vector3(0, 0.5f, 1));
+        CreateWall(new Vector3(0, 0.5f, 2));
+        CreateWall(new Vector3(1, 0.5f, -1));
+        CreateWall(new Vector3(2, 0.5f, -1));
+        CreateWall(new Vector3(-2, 0.5f, 1));
+        CreateGoal(new Vector3(4, 0.1f, -2));
+    }
 
-            bool overlap = false;
-            foreach (var obj in levelObjects)
-                if (obj != null && obj.CompareTag("Wall") &&
-                    Vector3.Distance(obj.transform.position, pos) < 0.5f)
-                { overlap = true; break; }
+    void CreateLevel5()
+    {
+        CreateWall(new Vector3(1, 0.5f, 0));
+        CreateWall(new Vector3(1, 0.5f, 2));
+        CreateWall(new Vector3(2, 0.5f, 1));
+        CreateWall(new Vector3(-1, 0.5f, -1));
+        CreateWall(new Vector3(-1, 0.5f, 0));
+        CreateWall(new Vector3(-2, 0.5f, 2));
+        CreateWall(new Vector3(3, 0.5f, -2));
+        CreateGoal(new Vector3(-4, 0.1f, 2));
+    }
 
-            if (!overlap) { CreateWall(pos); created++; }
-        }
-
-        CreateGoal(goalPos);
+    void CreateLevel6()
+    {
+        CreateWall(new Vector3(0, 0.5f, 0));
+        CreateWall(new Vector3(1, 0.5f, 1));
+        CreateWall(new Vector3(1, 0.5f, -1));
+        CreateWall(new Vector3(-1, 0.5f, 1));
+        CreateWall(new Vector3(-1, 0.5f, -1));
+        CreateWall(new Vector3(2, 0.5f, 0));
+        CreateWall(new Vector3(-2, 0.5f, 0));
+        CreateWall(new Vector3(3, 0.5f, 2));
+        CreateWall(new Vector3(3, 0.5f, -2));
+        CreateGoal(new Vector3(4, 0.1f, 0));
     }
 
     void GenerateGrid()

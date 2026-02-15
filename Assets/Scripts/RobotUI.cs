@@ -14,6 +14,7 @@ public class RobotUI : MonoBehaviour
     private VisualElement root;
     private VisualElement programList;
     private Label statusLbl;
+    private Label levelLbl;
     private Button runBtn;
     private Button stopBtn;
 
@@ -35,7 +36,7 @@ public class RobotUI : MonoBehaviour
     static readonly Color BLUE = Hex("#1E3A4C");
     static readonly Color BLUE2 = Hex("#2A5A7C");
     static readonly Color ORANGE = Hex("#1E3A4C");
-    static readonly Color ORANGE2 = Hex("#D4671A");
+    static readonly Color ORANGE2 = Hex("#1E3A4C");
     static readonly Color GREEN = Hex("#1E3A4C");
     static readonly Color GREEN2 = Hex("#2A7A5C");
     static readonly Color PURPLE = Hex("#1E3A4C");
@@ -63,6 +64,15 @@ public class RobotUI : MonoBehaviour
     void Update()
     {
         if (!RobotReady()) FindDeps();
+        UpdateLevelIndicator();
+    }
+
+    void UpdateLevelIndicator()
+    {
+        if (levelLbl != null && gameManager != null)
+        {
+            levelLbl.text = "● " + gameManager.LevelNumber + ".";
+        }
     }
 
     void FindDeps()
@@ -114,6 +124,7 @@ public class RobotUI : MonoBehaviour
         bar.style.alignItems = Align.Center;
 
         var lvl = L("● 1.", 12, TXT2, FontStyle.Bold);
+        levelLbl = lvl;
 
         statusLbl = L("Добавь команды и нажми СТАРТ", 12, TXT2);
         statusLbl.style.flexGrow = 1;

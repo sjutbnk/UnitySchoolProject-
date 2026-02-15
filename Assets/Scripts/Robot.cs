@@ -128,16 +128,16 @@ public class Robot : MonoBehaviour
     IEnumerator BumpEffect()
     {
         Vector3 orig = transform.position;
-        Vector3 bump = directions[currentDirIndex] * 0.12f;
-
-        transform.position = orig + bump;
+        Vector3 startPos = new Vector3(-3, 0.5f, 0);
+        
         if (hasColorProp && robotRenderer != null)
-            robotRenderer.material.color = Color.red;
+            robotRenderer.material.color = new Color(0.85f, 0.25f, 0.25f);
 
-        yield return new WaitForSeconds(0.12f);
-        transform.position = orig;
+        yield return new WaitForSeconds(0.3f);
 
-        yield return new WaitForSeconds(0.12f);
+        transform.position = startPos;
+        ResetDirection(1);
+        
         if (hasColorProp && robotRenderer != null)
             robotRenderer.material.color = originalColor;
     }
