@@ -19,8 +19,10 @@ public class GameManager : MonoBehaviour
     public int LevelNumber => currentLevel;
 
     private List<GameObject> levelObjects = new List<GameObject>();
+    private List<GameObject> floorTiles = new List<GameObject>();
     private GameObject goalObject;
     private Keyboard keyboard;
+    private bool gridGenerated = false;
 
     void Awake()
     {
@@ -35,6 +37,11 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        if (!gridGenerated)
+        {
+            GenerateGrid();
+            gridGenerated = true;
+        }
         LoadLevel(currentLevel);
     }
 
@@ -62,7 +69,6 @@ public class GameManager : MonoBehaviour
     {
         currentLevel = level;
         ClearLevel();
-        GenerateGrid();
 
         switch (level)
         {
@@ -80,14 +86,14 @@ public class GameManager : MonoBehaviour
 
     void CreateLevel1()
     {
-        CreateGoal(new Vector3(3, 0.1f, 0));
+        CreateGoal(new Vector3(2, 0.1f, 0));
     }
 
     void CreateLevel2()
     {
         CreateWall(new Vector3(1, 0.5f, 0));
         CreateWall(new Vector3(2, 0.5f, 0));
-        CreateGoal(new Vector3(4, 0.1f, 0));
+        CreateGoal(new Vector3(4, 0.1f, 3));
     }
 
     void CreateLevel3()
@@ -95,7 +101,7 @@ public class GameManager : MonoBehaviour
         CreateWall(new Vector3(1, 0.5f, 0));
         CreateWall(new Vector3(1, 0.5f, 1));
         CreateWall(new Vector3(-1, 0.5f, -1));
-        CreateGoal(new Vector3(3, 0.1f, 0));
+        CreateGoal(new Vector3(4, 0.1f, 2));
     }
 
     void CreateLevel4()
@@ -106,7 +112,7 @@ public class GameManager : MonoBehaviour
         CreateWall(new Vector3(1, 0.5f, -1));
         CreateWall(new Vector3(2, 0.5f, -1));
         CreateWall(new Vector3(-2, 0.5f, 1));
-        CreateGoal(new Vector3(4, 0.1f, -2));
+        CreateGoal(new Vector3(3, 0.1f, 1));
     }
 
     void CreateLevel5()
@@ -118,7 +124,7 @@ public class GameManager : MonoBehaviour
         CreateWall(new Vector3(-1, 0.5f, 0));
         CreateWall(new Vector3(-2, 0.5f, 2));
         CreateWall(new Vector3(3, 0.5f, -2));
-        CreateGoal(new Vector3(-4, 0.1f, 2));
+        CreateGoal(new Vector3(4, 0.1f, 3));
     }
 
     void CreateLevel6()
@@ -153,7 +159,7 @@ public class GameManager : MonoBehaviour
             tile.transform.SetParent(levelContainer);
             tile.name = "Floor";
             Destroy(tile.GetComponent<Collider>());
-            levelObjects.Add(tile);
+            floorTiles.Add(tile);
         }
     }
 
