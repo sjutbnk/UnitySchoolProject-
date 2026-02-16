@@ -19,10 +19,8 @@ public class GameManager : MonoBehaviour
     public int LevelNumber => currentLevel;
 
     private List<GameObject> levelObjects = new List<GameObject>();
-    private List<GameObject> floorTiles = new List<GameObject>();
     private GameObject goalObject;
     private Keyboard keyboard;
-    private bool gridGenerated = false;
 
     void Awake()
     {
@@ -37,11 +35,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (!gridGenerated)
-        {
-            GenerateGrid();
-            gridGenerated = true;
-        }
+        // Сетка уже должна быть сгенерирована в редакторе через кнопку
+        // Здесь только расставляем препятствия и цели для текущего уровня
         LoadLevel(currentLevel);
     }
 
@@ -139,28 +134,6 @@ public class GameManager : MonoBehaviour
         CreateWall(new Vector3(3, 0.5f, 2));
         CreateWall(new Vector3(3, 0.5f, -2));
         CreateGoal(new Vector3(4, 0.1f, 0));
-    }
-
-    void GenerateGrid()
-    {
-        int offset = gridSize / 2;
-        for (int x = 0; x < gridSize; x++)
-        for (int z = 0; z < gridSize; z++)
-        {
-            var pos  = new Vector3(x - offset, 0, z - offset);
-            var tile = GameObject.CreatePrimitive(PrimitiveType.Quad);
-            tile.transform.position   = pos;
-            tile.transform.rotation   = Quaternion.Euler(90, 0, 0);
-            tile.transform.localScale = Vector3.one * cellSize * 0.95f;
-            tile.GetComponent<Renderer>().material.color =
-                (x + z) % 2 == 0
-                    ? new Color(0.18f, 0.18f, 0.20f)
-                    : new Color(0.22f, 0.22f, 0.24f);
-            tile.transform.SetParent(levelContainer);
-            tile.name = "Floor";
-            Destroy(tile.GetComponent<Collider>());
-            floorTiles.Add(tile);
-        }
     }
 
     void CreateWall(Vector3 pos)
