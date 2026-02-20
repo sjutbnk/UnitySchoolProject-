@@ -35,8 +35,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        // Сетка уже должна быть сгенерирована в редакторе через кнопку
-        // Здесь только расставляем препятствия и цели для текущего уровня
         LoadLevel(currentLevel);
     }
 
@@ -135,6 +133,15 @@ public class GameManager : MonoBehaviour
         CreateWall(new Vector3(3, 0.5f, -2));
         CreateGoal(new Vector3(4, 0.1f, 0));
     }
+
+    void CreateLevel7()
+    {
+        CreateWall(new Vector3(3, 0.5f, 2));
+        CreateWall(new Vector3(3, 0.5f, -2));
+        CreateWall(new Vector3(1, 0.5f, 0));
+        CreateGoal(new Vector3(4, 0.1f, 0));
+    }
+
 
     void CreateWall(Vector3 pos)
     {

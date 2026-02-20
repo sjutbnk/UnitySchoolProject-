@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1234567890123456791}
   - component: {fileID: 1234567890123456792}
   - component: {fileID: 1234567890123456793}
-  - component: {fileID: 1234567890123456794}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Wall
@@ -64,11 +63,11 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
   m_ForceMeshLod: -1
-  m_MaterialLodBias: 0
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: cd022c63e7c1c7f4e98c0083ed2bcf70, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,23 +112,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1234567890123456794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1234567890123456789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a0f2786412b84a2e9c93d8d2b1a5925, type: 3}
-  m_Name: 
-  defaultSprite: {fileID: 0}
-  defaultMaterial: {fileID: 0}
-  overrideSprite: {fileID: 0}
-  customMaterial: {fileID: 0}
-  maskInteraction: 0
-  wasAssignedOnAwake: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_SpriteSortPoint: 0

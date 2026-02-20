@@ -10,7 +10,6 @@ public static class CreatePanelSettings
     {
         var panelSettings = ScriptableObject.CreateInstance<PanelSettings>();
         
-        // Настройки для телефона (портрет)
         panelSettings.scaleMode = PanelScaleMode.ConstantPixelSize;
         panelSettings.referenceDpi = 160;
         panelSettings.fallbackDpi = 160;
