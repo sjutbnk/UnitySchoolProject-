@@ -5,7 +5,7 @@ public class Robot : MonoBehaviour
 {
     [Header("Настройки движения")]
     public float moveSpeed   = 3f;
-    public float rotateSpeed = 360f;
+    public float rotateSpeed = 240f;
     public float cellSize    = 1f;
 
     [Header("Состояние")]
@@ -16,7 +16,14 @@ public class Robot : MonoBehaviour
     private bool hasColorProp  = false;
     private Color originalColor = Color.white;
 
-    private readonly Vector3[] directions = { Vector3.forward, Vector3.right, Vector3.back, Vector3.left };
+    private readonly Vector3[] directions = 
+    { 
+        Vector3.forward, 
+        Vector3.right, 
+        Vector3.back, 
+        Vector3.left 
+    };
+    
     private int currentDirIndex = 0;
 
     void Awake()

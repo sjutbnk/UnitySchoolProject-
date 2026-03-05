@@ -172,7 +172,7 @@ public class GameManager : MonoBehaviour
     void PlaceRobot()
     {
         if (robot == null) return;
-        robot.transform.position = new Vector3(-3, 0.5f, 0);
+        robot.transform.position = new Vector3(-3, 0f, 0);
         robot.ResetDirection(1);
     }
 
@@ -194,7 +194,7 @@ public class GameManager : MonoBehaviour
             }
             if (goalObject != null) goalObject.transform.localScale = orig;
         }
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.5f);
         NextLevel();
     }
 }
