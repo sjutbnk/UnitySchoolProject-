@@ -1,0 +1,43 @@
+fileFormatVersion: 2
+guid: 1f76b27e0e650df49ada355317547ddd
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 715df9372183c47e389bb6e19fbc3b52, type: 3}
+  editorImportSettings:
+    generateSecondaryUVSet: 0
+  importSettings:
+    nodeNameMethod: 1
+    animationMethod: 2
+    generateMipMaps: 1
+    texturesReadable: 0
+    defaultMinFilterMode: 9729
+    defaultMagFilterMode: 9729
+    anisotropicFilterLevel: 1
+  instantiationSettings:
+    mask: -1
+    layer: 0
+    skinUpdateWhenOffscreen: 1
+    lightIntensityFactor: 1
+    sceneObjectCreation: 2
+  assetDependencies:
+  - type: 0
+    originalUri: Assets\Models & Materials\concrete_barrier\scene.bin
+    assetPath: Assets\Models & Materials\concrete_barrier\scene.bin
+  - type: 0
+    originalUri: Assets\Models & Materials\concrete_barrier\textures\Barrier_diffuse.jpeg
+    assetPath: Assets\Models & Materials\concrete_barrier\textures\Barrier_diffuse.jpeg
+  - type: 0
+    originalUri: Assets\Models & Materials\concrete_barrier\textures\Barrier_normal.jpeg
+    assetPath: Assets\Models & Materials\concrete_barrier\textures\Barrier_normal.jpeg
+  - type: 0
+    originalUri: Assets\Models & Materials\concrete_barrier\textures\Barrier_occlusion.png
+    assetPath: Assets\Models & Materials\concrete_barrier\textures\Barrier_occlusion.png
+  - type: 0
+    originalUri: Assets\Models & Materials\concrete_barrier\textures\Barrier_yellow_diffuse.jpeg
+    assetPath: Assets\Models & Materials\concrete_barrier\textures\Barrier_yellow_diffuse.jpeg
+  reportItems: []

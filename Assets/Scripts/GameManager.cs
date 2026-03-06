@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [Header("Ссылки")]
     public Robot robot;
     public Transform levelContainer;
+    public GameObject YellowWall;
 
     [Header("Настройки")]
     public int currentLevel = 1;
@@ -71,6 +72,12 @@ public class GameManager : MonoBehaviour
             case 4: CreateLevel4(); break;
             case 5: CreateLevel5(); break;
             case 6: CreateLevel6(); break;
+            case 7: CreateLevel7(); break;
+            case 8: CreateLevel8(); break;
+            case 9: CreateLevel9(); break;
+            case 10: CreateLevel10(); break;
+            case 11: CreateLevel11(); break;
+            case 12: CreateLevel12(); break;
             default: CreateLevel1(); break;
         }
 
@@ -79,76 +86,140 @@ public class GameManager : MonoBehaviour
 
     void CreateLevel1()
     {
+        PlaceRobot();
         CreateGoal(new Vector3(2, 0.1f, 0));
     }
 
     void CreateLevel2()
     {
-        CreateWall(new Vector3(1, 0.5f, 0));
-        CreateWall(new Vector3(2, 0.5f, 0));
+        PlaceRobot();
+        CreateWall(new Vector3(1, 0, 0));
         CreateGoal(new Vector3(4, 0.1f, 3));
     }
 
-    void CreateLevel3()
-    {
-        CreateWall(new Vector3(1, 0.5f, 0));
-        CreateWall(new Vector3(1, 0.5f, 1));
-        CreateWall(new Vector3(-1, 0.5f, -1));
-        CreateGoal(new Vector3(4, 0.1f, 2));
-    }
+void CreateLevel3()
+{
+    PlaceRobot();
 
-    void CreateLevel4()
-    {
-        CreateWall(new Vector3(0, 0.5f, 0));
-        CreateWall(new Vector3(0, 0.5f, 1));
-        CreateWall(new Vector3(0, 0.5f, 2));
-        CreateWall(new Vector3(1, 0.5f, -1));
-        CreateWall(new Vector3(2, 0.5f, -1));
-        CreateWall(new Vector3(-2, 0.5f, 1));
-        CreateGoal(new Vector3(3, 0.1f, 1));
-    }
+    CreateWall(new Vector3(-1,0,1));
+    CreateWall(new Vector3(1,0,1));
 
-    void CreateLevel5()
-    {
-        CreateWall(new Vector3(1, 0.5f, 0));
-        CreateWall(new Vector3(1, 0.5f, 2));
-        CreateWall(new Vector3(2, 0.5f, 1));
-        CreateWall(new Vector3(-1, 0.5f, -1));
-        CreateWall(new Vector3(-1, 0.5f, 0));
-        CreateWall(new Vector3(-2, 0.5f, 2));
-        CreateWall(new Vector3(3, 0.5f, -2));
-        CreateGoal(new Vector3(4, 0.1f, 3));
-    }
+    CreateGoal(new Vector3(3,0,1));
+}
 
-    void CreateLevel6()
-    {
-        CreateWall(new Vector3(0, 0.5f, 0));
-        CreateWall(new Vector3(1, 0.5f, 1));
-        CreateWall(new Vector3(1, 0.5f, -1));
-        CreateWall(new Vector3(-1, 0.5f, 1));
-        CreateWall(new Vector3(-1, 0.5f, -1));
-        CreateWall(new Vector3(2, 0.5f, 0));
-        CreateWall(new Vector3(-2, 0.5f, 0));
-        CreateWall(new Vector3(3, 0.5f, 2));
-        CreateWall(new Vector3(3, 0.5f, -2));
-        CreateGoal(new Vector3(4, 0.1f, 0));
-    }
+void CreateLevel4()
+{
+    PlaceRobot();
 
-    void CreateLevel7()
-    {
-        CreateWall(new Vector3(3, 0.5f, 2));
-        CreateWall(new Vector3(3, 0.5f, -2));
-        CreateWall(new Vector3(1, 0.5f, 0));
-        CreateGoal(new Vector3(4, 0.1f, 0));
-    }
+    CreateWall(new Vector3(-1,0,0));
+    CreateWall(new Vector3(1,0,0));
+    CreateWall(new Vector3(1,0,1));
+
+    CreateGoal(new Vector3(3,0,0));
+}
+
+void CreateLevel5()
+{
+    PlaceRobot();
+
+    CreateWall(new Vector3(-1,0,1));
+    CreateWall(new Vector3(0,0,2));
+
+    CreateGoal(new Vector3(3,0,2));
+}
+
+void CreateLevel6()
+{
+    PlaceRobot();
+
+    CreateWall(new Vector3(-2,0,1));
+    CreateWall(new Vector3(-2,0,2));
+    CreateWall(new Vector3(0,0,1));
+
+    CreateGoal(new Vector3(3,0,1));
+}
+
+void CreateLevel7()
+{
+    PlaceRobot();
+
+    CreateWall(new Vector3(-1,0,1));
+    CreateWall(new Vector3(1,0,2));
+    CreateWall(new Vector3(2,0,2));
+
+    CreateGoal(new Vector3(3,0,3));
+}
+
+void CreateLevel8()
+{
+    PlaceRobot();
+
+    CreateWall(new Vector3(-2,0,1));
+    CreateWall(new Vector3(-1,0,1));
+    CreateWall(new Vector3(0,0,1));
+    CreateWall(new Vector3(5,3,1));
+
+    CreateGoal(new Vector3(3,0,1));
+}
+
+void CreateLevel9()
+{
+    PlaceRobot();
+
+    CreateWall(new Vector3(-1,0,0));
+    CreateWall(new Vector3(0,0,1));
+    CreateWall(new Vector3(1,0,2));
+
+    CreateGoal(new Vector3(3,0,3));
+}
+
+void CreateLevel10()
+{
+    PlaceRobot();
+
+    CreateWall(new Vector3(-2,0,1));
+    CreateWall(new Vector3(-2,0,2));
+    CreateWall(new Vector3(0,0,1));
+    CreateWall(new Vector3(1,0,2));
+
+    CreateGoal(new Vector3(3,0,2));
+}
+
+void CreateLevel11()
+{
+    PlaceRobot();
+
+    CreateWall(new Vector3(-2,0,0));
+    CreateWall(new Vector3(-1,0,1));
+    CreateWall(new Vector3(0,0,2));
+    CreateWall(new Vector3(1,0,2));
+    CreateWall(new Vector3(2,0,1));
+    
+    CreateGoal(new Vector3(3,0,3));
+}
+
+void CreateLevel12()
+{
+    PlaceRobot();
+
+    CreateWall(new Vector3(-2,0,0));
+    CreateWall(new Vector3(-2,0,1));
+    CreateWall(new Vector3(-1,0,2));
+    CreateWall(new Vector3(0,0,1));
+    CreateWall(new Vector3(1,0,0));
+    CreateWall(new Vector3(1,0,2));
+    CreateWall(new Vector3(2,0,1));
+    
+    CreateGoal(new Vector3(3,0,2));
+}
 
 
     void CreateWall(Vector3 pos)
     {
-        var wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        wall.transform.position   = pos;
-        wall.transform.localScale = Vector3.one * cellSize;
-        wall.GetComponent<Renderer>().material.color = new Color(0.35f, 0.35f, 0.40f);
+        var wall = Instantiate(YellowWall);
+        wall.transform.position = pos - new Vector3(0.5f, 0, 0);
+        // wall.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        // wall.GetComponent<Renderer>().material.color = new Color(0.35f, 0.35f, 0.40f);
         wall.tag  = "Wall";
         wall.name = "Wall";
         wall.transform.SetParent(levelContainer);

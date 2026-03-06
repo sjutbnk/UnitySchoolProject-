@@ -2034,6 +2034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   robot: {fileID: 2080484616}
   levelContainer: {fileID: 574413279}
+  YellowWall: {fileID: 6335702098395694154, guid: 76daec5dc3ed1124f92a7c6982a00ae6, type: 3}
   currentLevel: 1
   cellSize: 1
   gridSize: 9
@@ -8073,6 +8074,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RobotModel
       objectReference: {fileID: 0}
+    - target: {fileID: 7419252355382353212, guid: c3513dd3da1518e4c9ed7eab966793a6, type: 3}
+      propertyPath: m_Animation
+      value: 
+      objectReference: {fileID: 8513874004014098567, guid: 13ac9f3237b0b7d47935ee1032b4c3af, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
